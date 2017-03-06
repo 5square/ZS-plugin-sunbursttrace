@@ -6,7 +6,6 @@ zsApp.factory('codetracingService', function(WebAPI) {
         WebAPI({
 			url: '/ZendServer/Api/codetracingList',
 		}).then(function(res) {
-			console.log('codeTracingList', res.data.responseData.codeTracingList);
 			update (res.data.responseData.codeTracingList) ;
 		});
         return;
