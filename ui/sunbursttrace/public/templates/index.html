@@ -1,0 +1,122 @@
+<link href="/ZendServer/ModuleResource/sunbursttrace/css/index.css" rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    
+<div id="bread-wrp" class="page-description">
+	<div id="bread">
+		<h1 style="display: block;">Sunburst Code Tracing</h1>
+		<div class="bread-info-btn">
+			<i class="glyphicons glyphicons-info-sign"></i>
+			<div class="page-description-content-wrapper">
+				<div class="triangle"></div>
+				<div class="page-description-content">
+				<table>
+					<tr>
+						<td>
+							The sunburst chart is an alternative way to display Code Tracing data. Instead of displaying the data
+							in the classical table structure, each individual function or script call is displayed in a ring according
+							to the execution stack level. 
+						</td>‚
+					</tr>
+				</table>
+				</div>
+			</div>
+		</div>
+		<zendContact/>
+	</div>
+</div>
+
+<div class="z-row" ng-if="selectionMode">
+	<div class="zswac-input-block">
+		<label>Select Code Trace</label>
+		<table border="1">
+			<tr><td>ID</td><td>URL</td><td>Created</td><td>Server</td></tr>
+		    <tr ng-repeat="trace in codeTracingList" traceId="{{trace.id}}">
+		        <td><button ng-click="selectTrace(trace.id)">{{trace.id}}</button></td>
+		        <td>{{trace.url}}</td>
+		        <td>{{trace.date}}</td>
+		        <td>{{trace.nodeName}}</td>
+		    </tr>
+		</table>
+	</div>
+</div>
+
+<div class="z-row" ng-if="!selectionMode">
+	<div class="z-row sunburst-selection">
+		<ul>
+			<li><strong>Loaded Nodes: {{loadedNodes}} / {{expectedNodes}}</strong></li>
+			<li><label><input type="radio" name="mode" value="memory"> Memory</label></li>
+  			<li><label><input type="radio" name="mode" value="time" checked> Time incl.</label></li>
+			<li><button ng-click="switchToSelectionMode()">Select different Code Trace</button></li>
+		</ul>
+	</div>
+</div>
+
+<div class="z-row" ng-if="!selectionMode">
+	<ul class="jq-insights-list-inline">
+		<li>
+			<div class="jq-insights-cell-wrapper">
+				<strong class="ng-binding">{{total_time}}</strong>
+				<p>Total time</p>
+			</div>
+		</li>
+		<li>
+			<div class="jq-insights-cell-wrapper">
+				<strong class="ng-binding">{{total_memory}}</strong>
+				<p>Total memory</p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="jq-insights-cell-wrapper">
+				<strong>{{line_nr}}</strong>
+				<p>Line nr of selected script/function</p>
+			</div>
+		</li>
+		<li>
+			<div class="jq-insights-cell-wrapper">
+				<strong class="ng-binding">{{time_incl}}</strong>
+				<p>Time incl. of selected script/function</p>
+			</div>
+		</li>
+		<li>
+			<div class="jq-insights-cell-wrapper">
+				<strong class="ng-binding">{{time_excl}}</strong>
+				<p>Time excl. of selected script/function</p>
+			</div>
+		</li>
+		<li>
+			<div class="jq-insights-cell-wrapper">
+				<strong class="ng-binding">{{detail_memory}}</strong>
+				<p>Memory usage of selected script/function</p>
+			</div>
+		</li>
+		
+	</ul>
+</div>
+
+<div class="z-row" ng-if="!selectionMode">
+	<div class="z-row sunburst-header" ng-if="phpfile==false && phpfunction==false && phpobject==false">
+		<h3>Hover the rings for getting more information</h3>
+		<p>By clicking on the outer ring, more information for the selected source is loaded dynamically</p>
+	</div>
+	<div class="z-row sunburst-header" ng-if="phpfile || phpfunction || phpobject">
+		<div class="sunburst-header-line" ng-if="phpfile">
+			<p>Filename</p>
+			<strong>{{phpfile}}</strong>
+		</div>
+		<div class="sunburst-header-line" ng-if="phpfunction">
+			<p>Function</p>
+			<strong>{{phpfunction}}</strong>
+		</div>
+		<div class="sunburst-header-line" ng-if="phpobject">
+			<p>Object</p>
+			<strong>{{phpobject}}</strong>
+		</div>
+	</div>
+</div>
+
+<div id="chart" ng-if="!selectionMode" ></div>
+
+<div id="loading1" ng-if="loading1"></div>
