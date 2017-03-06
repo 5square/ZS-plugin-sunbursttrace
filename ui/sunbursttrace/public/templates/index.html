@@ -45,6 +45,15 @@
 <div class="z-row" ng-if="!selectionMode">
 	<div class="z-row sunburst-selection">
 		<ul>
+			<li><strong>Request: {{request}}</strong></li>
+			<li>Code Trace: {{traceId}}</li>
+		</ul>
+	</div>
+</div>
+
+<div class="z-row" ng-if="!selectionMode">
+	<div class="z-row sunburst-selection">
+		<ul>
 			<li><strong>Loaded Nodes: {{loadedNodes}} / {{expectedNodes}}</strong></li>
 			<li><label><input type="radio" name="mode" value="memory"> Memory</label></li>
   			<li><label><input type="radio" name="mode" value="time" checked> Time incl.</label></li>

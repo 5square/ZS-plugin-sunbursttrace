@@ -35,7 +35,7 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
     var nodeIds = [];
     var tree = {};
     
-    var selectedTraceId = false; 
+    $scope.traceId = false; 
     
     $scope.loadedNodes = 0;
     $scope.expectedNodes = 0;
@@ -65,7 +65,7 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
         $scope.selectionMode = false;
         nodeIds = [];
         tree = {};
-        selectedTraceId = traceId;
+        $scope.traceId = traceId;
         loadNodeChildren(tree, nodeIds, traceId, 0, -1, 0);
     }
     
@@ -153,7 +153,7 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
         
         //angular.element('#page-wrapper').scope().resetBarValues();
         resetBarValues();
-        loadNodeChildren(childrentree, nodeIds, selectedTraceId, d.ID, d.PARENT_ID, 3);
+        loadNodeChildren(childrentree, nodeIds, $scope.traceId, d.ID, d.PARENT_ID, 3);
     }
     
     var mouseover = function(d) {
@@ -181,6 +181,10 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
         nodeIds.forEach(function(nodeItem, index) {
             if (nodeItem.nodeId == nodeId) nodeItem.loaded = true; 
         });
+        
+        if (nodeId == 0) {
+            $scope.request = children[0].TEXT_PREVIEW.replace('REQUEST STARTUP:', '').replace('REQUEST:', '').trim();
+        }
         
         for (var i = 0; i < children.length; i++) {
             var childrenCount = parseInt(children[i].CHILDREN_COUNT);
