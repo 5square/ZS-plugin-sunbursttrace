@@ -53,7 +53,6 @@ zsApp.factory('d3Service', function() {
         
         node = root;
         d3Api.createVisualization(root);
-        d3.select("#loading").style("visibility", "hidden");
     }
     
     d3Api.createVisualization = function (json) {

@@ -117,9 +117,6 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
     }
     
     var postclick = function (d) {
-        
-        d3.select("#loading").style("visibility", "");
-        
         nodeId = parseInt(d.ID);
         var path = [];
         while (nodeId != -1) {
