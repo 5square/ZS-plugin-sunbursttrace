@@ -225,33 +225,6 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
         nodeId = parseInt(nodeId);
         parentId = parseInt(parentId);
         
-        /*
-        var toRemove = [];
-        nodeIds.some(function(nodeItem, index) {
-            if (nodeItem.nodeId != nodeId) return false;
-                
-            toRemove.push(index);
-            return true;
-        });
-        
-        var parents = [];
-        if (parentId >= 0) parents.push(nodeId);
-        
-        do {
-            checkParentId = parents.pop();
-            nodeIds.forEach(function(nodeItem, index) {
-                if (parseInt(nodeItem.parentId) != checkParentId) return;
-                
-                parents.push(nodeItem.nodeId);
-                toRemove.push(index);
-            });
-        } while (parents.length > 0);
-        
-        toRemove.forEach(function(index) {
-            nodeIds.splice(index, 1);
-        });
-        */
-        
         var item = {
                 "nodeId": nodeId,
                 "parentId": parentId,
