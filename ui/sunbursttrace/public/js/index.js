@@ -150,8 +150,7 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
                 return false
             });
         } while (nodeId != branchId);
-        
-        //angular.element('#page-wrapper').scope().resetBarValues();
+       
         resetBarValues();
         loadNodeChildren(childrentree, nodeIds, $scope.traceId, d.ID, d.PARENT_ID, 3);
     }
