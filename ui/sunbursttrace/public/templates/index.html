@@ -33,7 +33,7 @@
 		<table border="1">
 			<tr><td>ID</td><td>URL</td><td>Created</td><td>Server</td></tr>
 		    <tr ng-repeat="trace in codeTracingList" traceId="{{trace.id}}">
-		        <td><button ng-click="selectTrace(trace.id)">{{trace.id}}</button></td>
+		        <td><button ng-click="selectTrace(trace.id, trace.url)">{{trace.id}}</button></td>
 		        <td>{{trace.url}}</td>
 		        <td>{{trace.date}}</td>
 		        <td>{{trace.nodeName}}</td>
@@ -45,7 +45,8 @@
 <div class="z-row" ng-if="!selectionMode">
 	<div class="z-row sunburst-selection">
 		<ul>
-			<li><strong>Request: {{request}}</strong></li>
+			<li><strong>Request URL: {{request_url}}</strong></li>
+			<li><strong>Initial Script: {{initial_script}}</strong></li>
 			<li>Code Trace: {{traceId}}</li>
 		</ul>
 	</div>
@@ -128,4 +129,4 @@
 
 <div id="chart" ng-if="!selectionMode" ></div>
 
-<div id="loading1" ng-if="loading1"></div>
+<div id="loading" ng-if="loading"></div>

@@ -50,7 +50,7 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
     $scope.total_memory = "-/-";
     
     $scope.$watch('selectionMode', function() {
-        if ($scope.selectionMode) $scope.loading1=false;
+        if ($scope.selectionMode) $scope.loading = false;
     });
     
     var updateCodeTracingList = function(codeTracingList) {
@@ -61,11 +61,12 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
         $scope.selectionMode = true;
     }
     
-    $scope.selectTrace = function(traceId) {
+    $scope.selectTrace = function(traceId, url) {
         $scope.selectionMode = false;
         nodeIds = [];
         tree = {};
         $scope.traceId = traceId;
+        $scope.request_url = url
         loadNodeChildren(tree, nodeIds, traceId, 0, -1, 0);
     }
     
@@ -179,7 +180,9 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
         });
         
         if (nodeId == 0) {
-            $scope.request = children[0].TEXT_PREVIEW.replace('REQUEST STARTUP:', '').replace('REQUEST:', '').trim();
+            $scope.initial_script = children[0].TEXT_PREVIEW.replace('REQUEST STARTUP:', '').replace('REQUEST:', '').replace(/, URL.*/g, '').trim();
+            $scope.total_time = Math.round(children[0].INCLUSIVE / 1000) + " ms";
+            $scope.total_memory = Math.round(children[0].MEMORY_USAGE / 1024) + " KB";
         }
         
         for (var i = 0; i < children.length; i++) {
@@ -198,11 +201,8 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
         
         $scope.loadedNodes = loadedCnt;
         if (loadedCnt == nodeIds.length) {
-            $scope.total_time = Math.round(tree.children[0].INCLUSIVE / 1000) + " ms";
-            $scope.total_memory = Math.round(tree.children[0].MEMORY_USAGE / 1024) + " KB";
-            
             d3Service.allNodesLoaded(tree.children[0]);
-            $scope.loading1 = false;
+            $scope.loading = false;
         }
     }
     
@@ -216,7 +216,7 @@ zsApp.controller('sunbursttraceController', ['$scope', 'WebAPI', 'codetracingSer
     }
     
     var loadNodeChildren = function(childrentree, nodeIds, traceId, nodeId, parentId, level) {
-        $scope.loading1 = true;
+        $scope.loading = true;
 
         nodeId = parseInt(nodeId);
         parentId = parseInt(parentId);
